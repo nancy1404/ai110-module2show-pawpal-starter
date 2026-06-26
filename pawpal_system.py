@@ -9,6 +9,7 @@ class Task:
     priority: str
     frequency: str = "once"
     completed: bool = False
+    pet_name: str = ""
 
     def mark_complete(self):
         pass
