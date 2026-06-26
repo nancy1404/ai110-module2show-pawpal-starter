@@ -19,7 +19,9 @@ classDiagram
         +int duration
         +str priority
         +str frequency
+        +str pet_name
         +bool completed
+        +date due_date
         +mark_complete()
     }
 
@@ -30,8 +32,9 @@ classDiagram
         +filter_by_pet(pet_name)
         +filter_by_status(completed)
         +detect_conflicts(tasks)
+        +complete_task_and_create_next(task)
     }
 
     Owner "1" --> "*" Pet : owns
     Pet "1" --> "*" Task : has
-    Scheduler --> Owner : uses
+    Scheduler --> Owner : organizes tasks from
