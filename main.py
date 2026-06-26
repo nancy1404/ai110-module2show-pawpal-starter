@@ -12,6 +12,7 @@ owner.add_pet(luna)
 milo.add_task(Task("Morning walk", "08:00", 30, "high", "daily"))
 luna.add_task(Task("Breakfast feeding", "07:30", 10, "high", "daily"))
 milo.add_task(Task("Grooming brush", "18:00", 15, "medium", "weekly"))
+luna.add_task(Task("Medication", "08:00", 5, "high", "daily"))
 
 scheduler = Scheduler(owner)
 schedule = scheduler.get_daily_schedule()
@@ -20,5 +21,23 @@ print(f"Today's Schedule for {owner.name}:")
 for task in schedule:
     print(
         f"- {task.time} — {task.pet_name}: {task.description} "
-        f"({task.duration} min) [priority: {task.priority}]"
+        f"({task.duration} min) [priority: {task.priority}, frequency: {task.frequency}]"
     )
+
+print("\nConflict Warnings:")
+conflicts = scheduler.detect_conflicts(schedule)
+if conflicts:
+    for conflict in conflicts:
+        print(f"- {conflict}")
+else:
+    print("- No conflicts found.")
+
+print("\nRecurring Task Demo:")
+next_task = scheduler.complete_task_and_create_next(schedule[0])
+if next_task:
+    print(
+        f"- Completed '{schedule[0].description}'. "
+        f"Next occurrence: {next_task.due_date} at {next_task.time}."
+    )
+else:
+    print(f"- Completed '{schedule[0].description}'. No recurring task created.")

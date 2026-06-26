@@ -48,9 +48,16 @@ Running `python3 main.py` generates a readable daily schedule from the backend l
 
 ```text
 Today's Schedule for Nancy:
-- 07:30 — Luna: Breakfast feeding (10 min) [priority: high]
-- 08:00 — Milo: Morning walk (30 min) [priority: high]
-- 18:00 — Milo: Grooming brush (15 min) [priority: medium]
+- 07:30 — Luna: Breakfast feeding (10 min) [priority: high, frequency: daily]
+- 08:00 — Milo: Morning walk (30 min) [priority: high, frequency: daily]
+- 08:00 — Luna: Medication (5 min) [priority: high, frequency: daily]
+- 18:00 — Milo: Grooming brush (15 min) [priority: medium, frequency: weekly]
+
+Conflict Warnings:
+- Conflict at 08:00: Morning walk and Medication
+
+Recurring Task Demo:
+- Completed 'Breakfast feeding'. Next occurrence: 2026-06-27 at 07:30.
 ```
 
 ## 🧪 Testing PawPal+
@@ -71,14 +78,12 @@ Sample test output:
 
 ## 📐 Smarter Scheduling
 
-> Fill in once you've implemented scheduling logic.
-
 | Feature | Method(s) | Notes |
 |---------|-----------|-------|
-| Task sorting | | e.g., by priority, duration |
-| Filtering | | e.g., skip tasks if time runs out |
-| Conflict handling | | e.g., overlapping time slots |
-| Recurring tasks | | e.g., daily vs. weekly |
+| Task sorting | `Scheduler.sort_by_time()` / `Scheduler.get_daily_schedule()` | Returns tasks in chronological order using the task's `HH:MM` time string. |
+| Filtering | `Scheduler.filter_by_pet()` / `Scheduler.filter_by_status()` | Allows tasks to be filtered by pet name or completion status. |
+| Conflict handling | `Scheduler.detect_conflicts()` | Returns warning messages when two tasks are scheduled for the same exact time. |
+| Recurring tasks | `Scheduler.complete_task_and_create_next()` | Marks a daily or weekly task complete and creates the next occurrence. |
 
 ## 📸 Demo Walkthrough
 
