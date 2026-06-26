@@ -58,7 +58,7 @@ def test_filter_by_pet():
     assert milo_tasks[0].description == "Morning walk"
 
 
-def test_detect_conflicts_for_same_time():
+def test_detect_conflicts_for_overlapping_tasks():
     owner = Owner("Nancy")
     pet = Pet("Milo", "Dog")
     owner.add_pet(pet)
@@ -72,7 +72,9 @@ def test_detect_conflicts_for_same_time():
     conflicts = scheduler.detect_conflicts(owner.get_all_tasks())
 
     assert len(conflicts) == 1
-    assert "Conflict at 08:00" in conflicts[0]
+    assert "overlaps with" in conflicts[0]
+    assert "Morning walk" in conflicts[0]
+    assert "Medication" in conflicts[0]
 
 
 def test_daily_recurring_task_creates_next_day_task():

@@ -91,15 +91,15 @@ The tests cover core PawPal+ behaviors:
 Sample test output:
 
 ```text
-============ test session starts ============
+============= test session starts ==============
 platform darwin -- Python 3.13.13, pytest-9.1.1, pluggy-1.6.0
 rootdir: /Users/kwaknakyung/projects/codepath/AI110/ai110-module2show-pawpal-starter
 plugins: anyio-4.14.1
 collected 6 items
 
-tests/test_pawpal.py ......           [100%]
+tests/test_pawpal.py ......              [100%]
 
-============= 6 passed in 0.04s =============
+============== 6 passed in 0.03s ===============
 ```
 
 **Confidence Level:** ⭐⭐⭐⭐☆  
@@ -111,7 +111,7 @@ I am fairly confident in the current scheduler because the main backend behavior
 |---------|-----------|-------|
 | Task sorting | `Scheduler.sort_by_time()` / `Scheduler.get_daily_schedule()` | Returns tasks in chronological order using the task's `HH:MM` time string. |
 | Filtering | `Scheduler.filter_by_pet()` / `Scheduler.filter_by_status()` | Allows tasks to be filtered by pet name or completion status. |
-| Conflict handling | `Scheduler.detect_conflicts()` | Returns warning messages when two tasks are scheduled for the same exact time. |
+| Conflict handling | `Scheduler.detect_conflicts()` / `Scheduler._time_to_minutes()` | Detects overlapping task time ranges using each task's start time and duration, not just exact duplicate start times. |
 | Recurring tasks | `Scheduler.complete_task_and_create_next()` | Marks a daily or weekly task complete and creates the next occurrence. |
 
 ## 📸 Demo Walkthrough
@@ -134,7 +134,7 @@ Today's Schedule for Nancy:
 - 18:00 — Milo: Grooming brush (15 min) [priority: medium, frequency: weekly]
 
 Conflict Warnings:
-- Conflict at 08:00: Morning walk and Medication
+- Conflict: Morning walk (08:00, 30 min) overlaps with Medication (08:00, 5 min)
 
 Recurring Task Demo:
 - Completed 'Breakfast feeding'. Next occurrence: 2026-06-27 at 07:30.

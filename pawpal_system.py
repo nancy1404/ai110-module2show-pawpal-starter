@@ -54,10 +54,15 @@ class Scheduler:
     def get_daily_schedule(self):
         """Return all tasks sorted by time."""
         return self.sort_by_time(self.owner.get_all_tasks())
+    
+    def _time_to_minutes(self, time_text):
+        """Convert an HH:MM time string into minutes since midnight."""
+        hours, minutes = time_text.split(":")
+        return int(hours) * 60 + int(minutes)
 
     def sort_by_time(self, tasks):
         """Sort tasks by their HH:MM time string."""
-        return sorted(tasks, key=lambda task: task.time)
+        return sorted(tasks, key=lambda task: self._time_to_minutes(task.time))
 
     def filter_by_pet(self, pet_name):
         """Return tasks for one pet."""
@@ -74,19 +79,30 @@ class Scheduler:
         ]
 
     def detect_conflicts(self, tasks):
-        """Return warnings for tasks scheduled at the same time."""
-        seen_times = {}
+        """Return warnings for tasks with overlapping time ranges."""
         conflicts = []
+        sorted_tasks = self.sort_by_time(tasks)
 
-        for task in tasks:
-            if task.time in seen_times:
-                other_task = seen_times[task.time]
-                conflicts.append(
-                    f"Conflict at {task.time}: {other_task.description} "
-                    f"and {task.description}"
-                )
-            else:
-                seen_times[task.time] = task
+        for i in range(len(sorted_tasks)):
+            current_task = sorted_tasks[i]
+            current_start = self._time_to_minutes(current_task.time)
+            current_end = current_start + current_task.duration
+
+            for j in range(i + 1, len(sorted_tasks)):
+                next_task = sorted_tasks[j]
+                next_start = self._time_to_minutes(next_task.time)
+                next_end = next_start + next_task.duration
+
+                if next_start >= current_end:
+                    break
+
+                if current_start < next_end and next_start < current_end:
+                    conflicts.append(
+                        f"Conflict: {current_task.description} "
+                        f"({current_task.time}, {current_task.duration} min) overlaps with "
+                        f"{next_task.description} "
+                        f"({next_task.time}, {next_task.duration} min)"
+                    )
 
         return conflicts
     
