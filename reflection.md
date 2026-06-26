@@ -8,13 +8,15 @@ Before writing code, I identified three core actions a user should be able to pe
 
 1. Add basic owner and pet information so the system knows who is managing care and which pets need support.
 2. Add care tasks for each pet, such as feeding, walks, medication, grooming, or appointments.
-3. Generate a view a daily schedule that organizes tasks by time, priority, and completion status.
+3. Generate and view a daily schedule that organizes tasks by time, priority, and completion status.
 
-My initial UML design includes four main classes: `Owner`, `Pet`, `Task`, and `Scheduler`. The `Owner` class manages one or more pets. The `Pet` class stores details about an individual pet and keeps a list of that pet's tasks. The `Task` class represents one care activity with information such as description, time, priority, frequency, and completion status. The `Scheduler` class acts as the system's organizing layer by collecting tasks from the owner's pets and preparing daily schedules.
+My initial UML design includes four main classes: `Owner`, `Pet`, `Task`, and `Scheduler`. The `Owner` class manages one or more pets. The `Pet` class stores details about an individual pet and keeps a list of that pet's tasks. The `Task` class represents one care activity with information such as description, time, duration, priority, frequency, pet name, and completion status. The `Scheduler` class acts as the system's organizing layer by collecting tasks from the owner's pets and preparing daily schedules.
 
 **b. Design changes**
 
-I have not made major design changes yet. At this stage, the design is focused on keeping the system simple, modular, and easy to test before connecting it to the Streamlit UI.
+After asking my AI coding assistant to review the initial skeleton, I made one small design change. The AI pointed out that once tasks are collected into one flat schedule, each `Task` should still know which pet it belongs to. Without that relationship, methods like `filter_by_pet()` would be harder to implement.
+
+I accepted this suggestion and added a `pet_name` field to the `Task` class. I did not add extra classes, databases, IDs, or notification features because those would make the design more complex than necessary for the project scope.
 
 ---
 
