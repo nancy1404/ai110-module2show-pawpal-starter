@@ -4,13 +4,17 @@
 
 **a. Initial design**
 
-- Briefly describe your initial UML design.
-- What classes did you include, and what responsibilities did you assign to each?
+Before writing code, I identified three core actions a user should be able to perform in PawPal+:
+
+1. Add basic owner and pet information so the system knows who is managing care and which pets need support.
+2. Add care tasks for each pet, such as feeding, walks, medication, grooming, or appointments.
+3. Generate a view a daily schedule that organizes tasks by time, priority, and completion status.
+
+My initial UML design includes four main classes: `Owner`, `Pet`, `Task`, and `Scheduler`. The `Owner` class manages one or more pets. The `Pet` class stores details about an individual pet and keeps a list of that pet's tasks. The `Task` class represents one care activity with information such as description, time, priority, frequency, and completion status. The `Scheduler` class acts as the system's organizing layer by collecting tasks from the owner's pets and preparing daily schedules.
 
 **b. Design changes**
 
-- Did your design change during implementation?
-- If yes, describe at least one change and why you made it.
+I have not made major design changes yet. At this stage, the design is focused on keeping the system simple, modular, and easy to test before connecting it to the Streamlit UI.
 
 ---
 
