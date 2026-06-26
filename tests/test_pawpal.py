@@ -1,4 +1,6 @@
-from pawpal_system import Owner, Pet, Task
+from datetime import timedelta
+
+from pawpal_system import Owner, Pet, Task, Scheduler
 
 
 def test_task_mark_complete():
@@ -18,3 +20,73 @@ def test_add_task_to_pet():
     assert len(pet.tasks) == 1
     assert pet.tasks[0] == task
     assert task.pet_name == "Milo"
+
+
+def test_scheduler_sorts_tasks_by_time():
+    owner = Owner("Nancy")
+    pet = Pet("Milo", "Dog")
+    owner.add_pet(pet)
+
+    pet.add_task(Task("Evening brush", "18:00", 15, "medium"))
+    pet.add_task(Task("Breakfast", "07:30", 10, "high"))
+    pet.add_task(Task("Morning walk", "08:00", 30, "high"))
+
+    scheduler = Scheduler(owner)
+    schedule = scheduler.get_daily_schedule()
+
+    assert [task.description for task in schedule] == [
+        "Breakfast",
+        "Morning walk",
+        "Evening brush",
+    ]
+
+
+def test_filter_by_pet():
+    owner = Owner("Nancy")
+    milo = Pet("Milo", "Dog")
+    luna = Pet("Luna", "Cat")
+    owner.add_pet(milo)
+    owner.add_pet(luna)
+
+    milo.add_task(Task("Morning walk", "08:00", 30, "high"))
+    luna.add_task(Task("Breakfast feeding", "07:30", 10, "high"))
+
+    scheduler = Scheduler(owner)
+    milo_tasks = scheduler.filter_by_pet("Milo")
+
+    assert len(milo_tasks) == 1
+    assert milo_tasks[0].description == "Morning walk"
+
+
+def test_detect_conflicts_for_same_time():
+    owner = Owner("Nancy")
+    pet = Pet("Milo", "Dog")
+    owner.add_pet(pet)
+
+    task_one = Task("Morning walk", "08:00", 30, "high")
+    task_two = Task("Medication", "08:00", 5, "high")
+    pet.add_task(task_one)
+    pet.add_task(task_two)
+
+    scheduler = Scheduler(owner)
+    conflicts = scheduler.detect_conflicts(owner.get_all_tasks())
+
+    assert len(conflicts) == 1
+    assert "Conflict at 08:00" in conflicts[0]
+
+
+def test_daily_recurring_task_creates_next_day_task():
+    owner = Owner("Nancy")
+    pet = Pet("Luna", "Cat")
+    owner.add_pet(pet)
+
+    task = Task("Breakfast feeding", "07:30", 10, "high", "daily")
+    pet.add_task(task)
+
+    scheduler = Scheduler(owner)
+    next_task = scheduler.complete_task_and_create_next(task)
+
+    assert task.completed is True
+    assert next_task is not None
+    assert next_task.due_date == task.due_date + timedelta(days=1)
+    assert next_task.description == task.description

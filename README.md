@@ -62,19 +62,37 @@ Recurring Task Demo:
 
 ## 🧪 Testing PawPal+
 
-```bash
-# Run the full test suite:
-pytest
+Run the full test suite with:
 
-# Run with coverage:
-pytest --cov
+```bash
+python3 -m pytest
 ```
+
+The tests cover core PawPal+ behaviors:
+
+- Marking a task complete
+- Adding a task to a pet
+- Sorting tasks by time
+- Filtering tasks by pet
+- Detecting duplicate-time conflicts
+- Creating the next daily recurring task
 
 Sample test output:
 
+```text
+============ test session starts ============
+platform darwin -- Python 3.13.13, pytest-9.1.1, pluggy-1.6.0
+rootdir: /Users/kwaknakyung/projects/codepath/AI110/ai110-module2show-pawpal-starter
+plugins: anyio-4.14.1
+collected 6 items
+
+tests/test_pawpal.py ......           [100%]
+
+============= 6 passed in 0.04s =============
 ```
-# Paste your pytest output here
-```
+
+**Confidence Level:** ⭐⭐⭐⭐☆  
+I am fairly confident in the current scheduler because the main backend behaviors are covered by automated tests. I would still add more edge case tests later for invalid time formats and overlapping durations.
 
 ## 📐 Smarter Scheduling
 
