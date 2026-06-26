@@ -12,6 +12,17 @@ A busy pet owner needs help staying consistent with pet care. They want an assis
 
 Your job is to design the system first (UML), then implement the logic in Python, then connect it to the Streamlit UI.
 
+## System Design
+
+PawPal+ is built around four core Python classes:
+
+- `Owner`: Stores the owner's name and manages a list of pets.
+- `Pet`: Stores identifying information about each pet and keeps a list of that pet's care tasks.
+- `Task`: Represents one pet care activity, including its description, time, duration, priority, frequency, due date, pet name, and completion status.
+- `Scheduler`: Organizes tasks across all pets owned by an owner. It can sort tasks by time, filter tasks by pet or completion status, detect scheduling conflicts, and create the next occurrence for recurring tasks.
+
+The system follows a CLI-first workflow. The backend logic is implemented in `pawpal_system.py`, demonstrated through `main.py`, tested with `pytest`, and connected to the Streamlit interface in `app.py`.
+
 ## What you will build
 
 Your final app should:
