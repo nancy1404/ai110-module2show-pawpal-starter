@@ -1,6 +1,6 @@
+import json
 from dataclasses import dataclass, field
 from datetime import date, timedelta
-
 
 @dataclass
 class Task:
@@ -150,3 +150,64 @@ class Scheduler:
                 return f"{hours:02d}:{minutes:02d}"
 
         return None
+    
+def save_owner_to_json(owner, filename):
+    """Save an owner's pets and tasks to a JSON file."""
+    data = {
+        "name": owner.name,
+        "pets": []
+    }
+
+    for pet in owner.pets:
+        pet_data = {
+            "name": pet.name,
+            "species": pet.species,
+            "tasks": []
+        }
+
+        for task in pet.tasks:
+            pet_data["tasks"].append(
+                {
+                    "description": task.description,
+                    "time": task.time,
+                    "duration": task.duration,
+                    "priority": task.priority,
+                    "frequency": task.frequency,
+                    "pet_name": task.pet_name,
+                    "completed": task.completed,
+                    "due_date": task.due_date.isoformat(),
+                }
+            )
+
+        data["pets"].append(pet_data)
+
+    with open(filename, "w", encoding="utf-8") as file:
+        json.dump(data, file, indent=4)
+
+
+def load_owner_from_json(filename):
+    """Load an owner, pets, and tasks from a JSON file."""
+    with open(filename, "r", encoding="utf-8") as file:
+        data = json.load(file)
+
+    owner = Owner(data["name"])
+
+    for pet_data in data["pets"]:
+        pet = Pet(pet_data["name"], pet_data["species"])
+
+        for task_data in pet_data["tasks"]:
+            task = Task(
+                description=task_data["description"],
+                time=task_data["time"],
+                duration=task_data["duration"],
+                priority=task_data["priority"],
+                frequency=task_data["frequency"],
+                pet_name=task_data["pet_name"],
+                completed=task_data["completed"],
+                due_date=date.fromisoformat(task_data["due_date"]),
+            )
+            pet.add_task(task)
+
+        owner.add_pet(pet)
+
+    return owner

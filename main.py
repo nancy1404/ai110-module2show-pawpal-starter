@@ -1,4 +1,11 @@
-from pawpal_system import Owner, Pet, Task, Scheduler
+from pawpal_system import (
+    Owner,
+    Pet,
+    Task,
+    Scheduler,
+    save_owner_to_json,
+    load_owner_from_json,
+)
 
 
 owner = Owner("Nancy")
@@ -48,3 +55,11 @@ if next_slot:
     print(f"- Next available 20-minute slot after 08:00: {next_slot}")
 else:
     print("- No available slot found.")
+
+print("\nPersistence Demo:")
+save_owner_to_json(owner, "pawpal_data.json")
+loaded_owner = load_owner_from_json("pawpal_data.json")
+print(
+    f"- Saved and loaded owner '{loaded_owner.name}' "
+    f"with {len(loaded_owner.pets)} pets."
+)

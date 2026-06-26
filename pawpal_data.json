@@ -1,0 +1,57 @@
+{
+    "name": "Nancy",
+    "pets": [
+        {
+            "name": "Milo",
+            "species": "Dog",
+            "tasks": [
+                {
+                    "description": "Morning walk",
+                    "time": "08:00",
+                    "duration": 30,
+                    "priority": "high",
+                    "frequency": "daily",
+                    "pet_name": "Milo",
+                    "completed": false,
+                    "due_date": "2026-06-26"
+                },
+                {
+                    "description": "Grooming brush",
+                    "time": "18:00",
+                    "duration": 15,
+                    "priority": "medium",
+                    "frequency": "weekly",
+                    "pet_name": "Milo",
+                    "completed": false,
+                    "due_date": "2026-06-26"
+                }
+            ]
+        },
+        {
+            "name": "Luna",
+            "species": "Cat",
+            "tasks": [
+                {
+                    "description": "Breakfast feeding",
+                    "time": "07:30",
+                    "duration": 10,
+                    "priority": "high",
+                    "frequency": "daily",
+                    "pet_name": "Luna",
+                    "completed": true,
+                    "due_date": "2026-06-26"
+                },
+                {
+                    "description": "Medication",
+                    "time": "08:00",
+                    "duration": 5,
+                    "priority": "high",
+                    "frequency": "daily",
+                    "pet_name": "Luna",
+                    "completed": false,
+                    "due_date": "2026-06-26"
+                }
+            ]
+        }
+    ]
+}

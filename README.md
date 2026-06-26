@@ -95,11 +95,11 @@ Sample test output:
 platform darwin -- Python 3.13.13, pytest-9.1.1, pluggy-1.6.0
 rootdir: /Users/kwaknakyung/projects/codepath/AI110/ai110-module2show-pawpal-starter
 plugins: anyio-4.14.1
-collected 6 items
+collected 8 items
 
-tests/test_pawpal.py ......              [100%]
+tests/test_pawpal.py ........            [100%]
 
-============== 6 passed in 0.03s ===============
+============== 8 passed in 0.04s ===============
 ```
 
 **Confidence Level:** ⭐⭐⭐⭐☆  
@@ -114,6 +114,22 @@ I am fairly confident in the current scheduler because the main backend behavior
 | Conflict handling | `Scheduler.detect_conflicts()` / `Scheduler._time_to_minutes()` | Detects overlapping task time ranges using each task's start time and duration, not just exact duplicate start times. |
 | Recurring tasks | `Scheduler.complete_task_and_create_next()` | Marks a daily or weekly task complete and creates the next occurrence. |
 | Next available slot | `Scheduler.find_next_available_slot()` | Finds the next open time slot after a preferred start time by checking task durations and avoiding overlaps. |
+
+## Data Persistence
+
+PawPal+ includes JSON save/load functionality so owner, pet, and task data can persist between runs.
+
+- `save_owner_to_json(owner, filename)` saves the owner's name, pets, and tasks to a JSON file.
+- `load_owner_from_json(filename)` rebuilds the `Owner`, `Pet`, and `Task` objects from that saved JSON file.
+- `main.py` demonstrates persistence by saving sample data to `pawpal_data.json` and loading it back.
+- `tests/test_pawpal.py` includes an automated test to verify that saved owner, pet, and task data can be loaded correctly.
+
+Files modified for persistence:
+
+- `pawpal_system.py`
+- `main.py`
+- `tests/test_pawpal.py`
+- `README.md`
 
 ## UI and Output Formatting
 
@@ -154,6 +170,9 @@ Recurring Task Demo:
 
 Next Available Slot Demo:
 - Next available 20-minute slot after 08:00: 08:30
+
+Persistence Demo:
+- Saved and loaded owner 'Nancy' with 2 pets.
 ```
 
 **Screenshot or video** *(optional)*: Not included.

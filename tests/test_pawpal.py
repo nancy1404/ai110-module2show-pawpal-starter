@@ -1,6 +1,13 @@
 from datetime import timedelta
 
-from pawpal_system import Owner, Pet, Task, Scheduler
+from pawpal_system import (
+    Owner,
+    Pet,
+    Task,
+    Scheduler,
+    save_owner_to_json,
+    load_owner_from_json,
+)
 
 
 def test_task_mark_complete():
@@ -105,3 +112,21 @@ def test_find_next_available_slot_after_conflict():
     slot = scheduler.find_next_available_slot(owner.get_all_tasks(), "08:00", 20)
 
     assert slot == "08:30"
+
+def test_save_and_load_owner_json(tmp_path):
+    owner = Owner("Nancy")
+    pet = Pet("Milo", "Dog")
+    owner.add_pet(pet)
+    pet.add_task(Task("Morning walk", "08:00", 30, "high", "daily"))
+
+    filename = tmp_path / "pawpal_test_data.json"
+
+    save_owner_to_json(owner, filename)
+    loaded_owner = load_owner_from_json(filename)
+
+    assert loaded_owner.name == "Nancy"
+    assert len(loaded_owner.pets) == 1
+    assert loaded_owner.pets[0].name == "Milo"
+    assert len(loaded_owner.pets[0].tasks) == 1
+    assert loaded_owner.pets[0].tasks[0].description == "Morning walk"
+    assert loaded_owner.pets[0].tasks[0].frequency == "daily"
