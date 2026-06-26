@@ -18,9 +18,14 @@ Claude reviewed the skeleton and identified that the `Task` class did not know w
 
 Files affected after reviewing the agent's suggestion:
 
-- `pawpal_system.py`: added a `pet_name` field to the `Task` dataclass.
+- `pawpal_system.py`: added a `pet_name` field to the `Task` dataclass and later added `Scheduler.find_next_available_slot()` for the stretch scheduling feature.
+- `main.py`: added CLI demos for conflict detection, recurring tasks, and the next available slot feature.
+- `tests/test_pawpal.py`: added automated tests for core behavior and the next available slot algorithm.
+- `README.md`: documented smarter scheduling features, sample CLI output, testing output, and UI/output formatting.
 - `reflection.md`: documented the design change and why I accepted it.
 - `ai_interactions.md`: documented the agent workflow and comparison process.
+
+I also implemented a stretch scheduling feature, `Scheduler.find_next_available_slot()`, which searches for the next open time after a preferred start time while avoiding overlapping task durations.
 
 **What did you have to verify or fix manually?**
 

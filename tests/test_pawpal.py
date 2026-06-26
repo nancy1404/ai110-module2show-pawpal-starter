@@ -92,3 +92,16 @@ def test_daily_recurring_task_creates_next_day_task():
     assert next_task is not None
     assert next_task.due_date == task.due_date + timedelta(days=1)
     assert next_task.description == task.description
+
+def test_find_next_available_slot_after_conflict():
+    owner = Owner("Nancy")
+    pet = Pet("Milo", "Dog")
+    owner.add_pet(pet)
+
+    pet.add_task(Task("Morning walk", "08:00", 30, "high"))
+    pet.add_task(Task("Medication", "08:00", 5, "high"))
+
+    scheduler = Scheduler(owner)
+    slot = scheduler.find_next_available_slot(owner.get_all_tasks(), "08:00", 20)
+
+    assert slot == "08:30"

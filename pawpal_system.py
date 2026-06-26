@@ -126,3 +126,27 @@ class Scheduler:
             pet_name=task.pet_name,
             due_date=next_date,
         )
+    
+    def find_next_available_slot(self, tasks, preferred_time, duration):
+        """Find the next available HH:MM slot that does not overlap existing tasks."""
+        candidate_start = self._time_to_minutes(preferred_time)
+
+        while candidate_start + duration <= 24 * 60:
+            candidate_end = candidate_start + duration
+            has_conflict = False
+
+            for task in tasks:
+                task_start = self._time_to_minutes(task.time)
+                task_end = task_start + task.duration
+
+                if candidate_start < task_end and task_start < candidate_end:
+                    has_conflict = True
+                    candidate_start = task_end
+                    break
+
+            if not has_conflict:
+                hours = candidate_start // 60
+                minutes = candidate_start % 60
+                return f"{hours:02d}:{minutes:02d}"
+
+        return None

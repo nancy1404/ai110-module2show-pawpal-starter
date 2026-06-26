@@ -113,6 +113,7 @@ I am fairly confident in the current scheduler because the main backend behavior
 | Filtering | `Scheduler.filter_by_pet()` / `Scheduler.filter_by_status()` | Allows tasks to be filtered by pet name or completion status. |
 | Conflict handling | `Scheduler.detect_conflicts()` / `Scheduler._time_to_minutes()` | Detects overlapping task time ranges using each task's start time and duration, not just exact duplicate start times. |
 | Recurring tasks | `Scheduler.complete_task_and_create_next()` | Marks a daily or weekly task complete and creates the next occurrence. |
+| Next available slot | `Scheduler.find_next_available_slot()` | Finds the next open time slot after a preferred start time by checking task durations and avoiding overlaps. |
 
 ## UI and Output Formatting
 
@@ -150,6 +151,9 @@ Conflict Warnings:
 
 Recurring Task Demo:
 - Completed 'Breakfast feeding'. Next occurrence: 2026-06-27 at 07:30.
+
+Next Available Slot Demo:
+- Next available 20-minute slot after 08:00: 08:30
 ```
 
 **Screenshot or video** *(optional)*: Not included.

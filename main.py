@@ -41,3 +41,10 @@ if next_task:
     )
 else:
     print(f"- Completed '{schedule[0].description}'. No recurring task created.")
+
+print("\nNext Available Slot Demo:")
+next_slot = scheduler.find_next_available_slot(schedule, "08:00", 20)
+if next_slot:
+    print(f"- Next available 20-minute slot after 08:00: {next_slot}")
+else:
+    print("- No available slot found.")
