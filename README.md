@@ -105,12 +105,28 @@ I am fairly confident in the current scheduler because the main backend behavior
 
 ## 📸 Demo Walkthrough
 
-Describe your app in numbered steps so a reader can follow along without watching a video:
+1. The user opens the PawPal+ Streamlit app and enters the owner's name.
+2. The user adds a pet by entering the pet's name and species.
+3. The user creates care tasks for that pet, including a task title, time, duration, priority, and frequency.
+4. The app stores the owner, pet, and task data in `st.session_state` so the information stays available while the user interacts with the page.
+5. When the user clicks **Generate schedule**, the app uses the `Scheduler` class to display tasks in chronological order.
+6. The app can show pending tasks only, helping the owner focus on unfinished care tasks.
+7. If two tasks are scheduled for the same time, the app displays a conflict warning using the scheduler's conflict detection logic.
 
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
-4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
+Example CLI output from `python3 main.py`:
 
-**Screenshot or video** *(optional)*: <!-- Insert a screenshot or link to a demo video here -->
+```text
+Today's Schedule for Nancy:
+- 07:30 — Luna: Breakfast feeding (10 min) [priority: high, frequency: daily]
+- 08:00 — Milo: Morning walk (30 min) [priority: high, frequency: daily]
+- 08:00 — Luna: Medication (5 min) [priority: high, frequency: daily]
+- 18:00 — Milo: Grooming brush (15 min) [priority: medium, frequency: weekly]
+
+Conflict Warnings:
+- Conflict at 08:00: Morning walk and Medication
+
+Recurring Task Demo:
+- Completed 'Breakfast feeding'. Next occurrence: 2026-06-27 at 07:30.
+```
+
+**Screenshot or video** *(optional)*: Not included.
