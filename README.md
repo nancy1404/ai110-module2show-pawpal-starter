@@ -114,6 +114,18 @@ I am fairly confident in the current scheduler because the main backend behavior
 | Conflict handling | `Scheduler.detect_conflicts()` / `Scheduler._time_to_minutes()` | Detects overlapping task time ranges using each task's start time and duration, not just exact duplicate start times. |
 | Recurring tasks | `Scheduler.complete_task_and_create_next()` | Marks a daily or weekly task complete and creates the next occurrence. |
 
+## UI and Output Formatting
+
+PawPal+ includes simple formatting features to make the app easier to read:
+
+- The Streamlit app uses an emoji title (`🐾 PawPal+`) to make the interface more pet-themed.
+- `st.table()` displays pets and scheduled tasks in structured tables instead of raw Python objects.
+- `st.success()` confirms when a pet or task is added.
+- `st.warning()` displays conflict warnings when tasks overlap.
+- The CLI demo in `main.py` uses readable bullet-style output with pet names, times, durations, priorities, and frequencies.
+
+These formatting choices make both the browser demo and terminal output easier for a reviewer or pet owner to understand.
+
 ## 📸 Demo Walkthrough
 
 1. The user opens the PawPal+ Streamlit app and enters the owner's name.
