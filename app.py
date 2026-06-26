@@ -81,8 +81,13 @@ st.subheader("Build Schedule")
 
 scheduler = Scheduler(st.session_state.owner)
 
+show_pending_only = st.checkbox("Show pending tasks only", value=False)
+
 if st.button("Generate schedule"):
-    schedule = scheduler.get_daily_schedule()
+    if show_pending_only:
+        schedule = scheduler.sort_by_time(scheduler.filter_by_status(False))
+    else:
+        schedule = scheduler.get_daily_schedule()
 
     if schedule:
         st.write("Today's Schedule")
